@@ -54,6 +54,11 @@ class CylinderReactor(paramak.Reactor):
         self.vv_thickness = vv_thickness
         self.lower_vv_thickness = lower_vv_thickness
 
+        # makes a list of the input arguments, use in reactor.input_variables
+        self.input_variable_names = paramak.Reactor().input_variable_names + [
+            elem for elem in list(locals().keys()) if elem not in ["shapes_and_components", "self", "__class__"]
+        ]
+
     def create_solids(self):
         """Creates a list of paramak.Shape for components and saves it in
         self.shapes_and_components

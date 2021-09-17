@@ -34,6 +34,12 @@ class SegmentedBlanketBallReactor(paramak.BallReactor):
 
         super().__init__(**kwargs)
 
+        # makes a list of the input arguments, use in reactor.input_variables
+        self.input_variable_names = paramak.Reactor().input_variable_names + [
+            elem for elem in list(locals().keys()) if elem not in ["kwargs", "shapes_and_components", "self", "__class__"]
+        ] + list(kwargs.keys())
+
+
     @property
     def gap_between_blankets(self):
         return self._gap_between_blankets

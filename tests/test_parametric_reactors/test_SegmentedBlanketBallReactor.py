@@ -33,9 +33,16 @@ class TestSegmentedBlanketBallReactor(unittest.TestCase):
             number_of_blanket_segments=4,
         )
 
+    def test_input_variable_names(self):
+        """Check that the number of input variables names is the same length as
+        number of input_variables"""
+        reactor = self.test_reactor
+        assert len(reactor.input_variable_names) == len(reactor.input_variables)
+        assert len(reactor.input_variable_names) == 28
+
     def test_gap_between_blankets_impacts_volume(self):
         """Creates a SegmentedBlanketBallReactor with different
-        gap_between_blankets and checks the volume of the blankes and the
+        gap_between_blankets and checks the volume of the blankets and the
         firstwall changes."""
 
         self.test_reactor.create_solids()

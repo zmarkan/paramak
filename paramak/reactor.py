@@ -43,7 +43,7 @@ class Reactor:
 
     def __init__(
             self,
-            shapes_and_components: Union[List[paramak.Shape], str],
+            shapes_and_components: Union[List[paramak.Shape], str]=[],
             graveyard_size: Optional[float] = 20_000,
             graveyard_offset: Optional[float] = None,
             largest_shapes: Optional[List[paramak.Shape]] = None,
@@ -62,6 +62,22 @@ class Reactor:
         self.solid = None
 
         self.reactor_hash_value = None
+
+        self.input_variable_names = [
+            elem for elem in list(locals().keys()) if elem not in ["shapes_and_components", "self", "__class__", "solid"]
+        ]
+
+
+    @property
+    def input_variables(self):
+        all_variables = {}
+        for name in self.input_variable_names:
+            # if name not in ['self', '__class__']:
+            # if name in self.__dict__.keys():
+            if hasattr(self, name):
+                all_variables[name] = getattr(self, name)
+            # all_variables[name] = self.__dict__[name]
+        return all_variables
 
     @property
     def graveyard_size(self):

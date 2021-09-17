@@ -84,6 +84,11 @@ class CenterColumnStudyReactor(paramak.Reactor):
         self.elongation = elongation
         self.triangularity = triangularity
 
+        # makes a list of the input arguments, use in reactor.input_variables
+        self.input_variable_names = paramak.Reactor().input_variable_names + [
+            elem for elem in list(locals().keys()) if elem not in ["shapes_and_components", "self", "__class__"]
+        ]
+
         # sets major radius and minor radius from equatorial_points to allow a
         # radial build this helps avoid the plasma overlapping the center
         # column and other components

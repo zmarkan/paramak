@@ -125,6 +125,18 @@ class BallReactor(paramak.Reactor):
 
         self.plasma_gap_vertical_thickness = plasma_gap_vertical_thickness
         self.divertor_to_tf_gap_vertical_thickness = divertor_to_tf_gap_vertical_thickness
+
+        self.elongation = elongation
+        self.triangularity = triangularity
+
+        self.number_of_tf_coils = number_of_tf_coils
+        self.rotation_angle = rotation_angle
+
+        # makes a list of the input arguments, use in reactor.input_variables
+        self.input_variable_names = paramak.Reactor().input_variable_names + [
+            elem for elem in list(locals().keys()) if elem not in ["shapes_and_components", "self", "__class__"]
+        ]
+
         if self.plasma_gap_vertical_thickness is None:
             self.plasma_gap_vertical_thickness = \
                 self.outer_plasma_gap_radial_thickness
@@ -144,12 +156,6 @@ class BallReactor(paramak.Reactor):
         self.major_radius = \
             (outer_equatorial_point + inner_equatorial_point) / 2
         self.minor_radius = self.major_radius - inner_equatorial_point
-
-        self.elongation = elongation
-        self.triangularity = triangularity
-
-        self.number_of_tf_coils = number_of_tf_coils
-        self.rotation_angle = rotation_angle
 
         self.offset_from_plasma = [
             self.major_radius - self.minor_radius,

@@ -27,6 +27,11 @@ class EuDemoFrom2015PaperDiagram(paramak.Reactor):
         self.rotation_angle = rotation_angle
         self.number_of_tf_coils = number_of_tf_coils
 
+        # makes a list of the input arguments, use in reactor.input_variables
+        self.input_variable_names = paramak.Reactor().input_variable_names + [
+            elem for elem in list(locals().keys()) if elem not in ["shapes_and_components", "self", "__class__"]
+        ]
+
     def create_tf_coils(self, vac_vessel_inner, vac_vessel) -> list:
         """Creates a 3d solids for each tf coil.
 
