@@ -77,7 +77,7 @@ jobs:
   # Tests: Parametric reactors
   parametric-reactors-tests:
     executor: paramak
-    parallelism: 5
+    parallelism: 10
     steps: 
       - checkout
       - install
