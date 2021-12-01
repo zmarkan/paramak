@@ -68,6 +68,19 @@ jobs:
             pytest tests/test_parametric_components/ -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
       - codecov-upload 
 
+
+  # Tests: Parametric reactors
+  parametric-reactors-tests:
+    executor: paramak
+    steps: 
+      - checkout
+      - install
+      - run:
+          name: run parametric_reactors tests
+          command:
+            pytest tests/test_parametric_reactors/ -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+      - codecov-upload 
+
   # test:
   build:
     docker:
@@ -120,6 +133,8 @@ workflows:
     jobs:
       - quick-tests
       - parametric-components-tests
+      - parametric-reactors-tests
+      
       # - build
       
       # - test
