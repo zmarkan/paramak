@@ -60,13 +60,16 @@ jobs:
   # Tests: Parametric components
   parametric-components-tests:
     executor: paramak
+    parallelism: 5
     steps: 
       - checkout
       - install
       - run:
           name: run parametric_components tests
-          command:
-            pytest tests/test_parametric_components/ -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+          command: |
+            set -e
+            TEST_FILES=$(circleci tests glob "tests/test_parametric_components/**/*.py" | circleci tests split)
+            pytest -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml $TEST_FILES
       - store_test_results:
           path: test-reports
       - store_artifacts:
