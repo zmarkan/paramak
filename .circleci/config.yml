@@ -53,7 +53,8 @@ jobs:
 
       - store_test_results:
           path: test-reports
-
+      - store_artifacts:
+          path: test-reports
       - codecov-upload
     
   # Tests: Parametric components
@@ -66,19 +67,30 @@ jobs:
           name: run parametric_components tests
           command:
             pytest tests/test_parametric_components/ -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+      - store_test_results:
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
       - codecov-upload 
 
 
   # Tests: Parametric reactors
   parametric-reactors-tests:
     executor: paramak
+    parallelism: 5
     steps: 
       - checkout
       - install
       - run:
           name: run parametric_reactors tests
-          command:
-            pytest tests/test_parametric_reactors/ -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+          command: |
+            set -e
+            TEST_FILES=$(circleci tests glob "tests/test_parametric_reactors/**/*.py" | circleci tests split)
+            pytest -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml $TEST_FILES
+      - store_test_results:
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
       - codecov-upload 
 
   # test:
