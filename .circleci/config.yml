@@ -60,7 +60,7 @@ jobs:
   # Tests: Parametric components
   parametric-components-tests:
     executor: paramak
-    parallelism: 5
+    parallelism: 2
     steps: 
       - checkout
       - install
@@ -80,7 +80,7 @@ jobs:
   # Tests: Parametric reactors
   parametric-reactors-tests:
     executor: paramak
-    parallelism: 10
+    parallelism: 4
     steps: 
       - checkout
       - install
