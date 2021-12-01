@@ -25,6 +25,7 @@ commands:
 
 jobs:
 
+  # Tests: Utils, Shape, Reactor, Parametric Shapes
   quick-tests:
     executor: paramak
     steps:
@@ -52,7 +53,20 @@ jobs:
 
       - store_test_results:
           path: test-reports
+
+      - codecov-upload
     
+  # Tests: Parametric components
+  parametric-components-tests:
+    executor: paramak
+    steps: 
+      - checkout
+      - install
+      - run:
+          name: run parametric_components tests
+          command:
+            pytest tests/test_parametric_components/ -v --cov=paramak --cov-append --cov-report term --cov-report xml --junitxml=test-reports/junit.xml
+      - codecov-upload 
 
   # test:
   build:
@@ -105,6 +119,7 @@ workflows:
   test-build-deploy:
     jobs:
       - quick-tests
+      - parametric-components-tests
       # - build
       
       # - test
